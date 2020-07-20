@@ -11,6 +11,7 @@ namespace FromBossToCrook.Model
         float Happiness { get; set; }
 
         event Action Death;
+        event Action ModelChanged;
 
         void IncreaseAge();
     }

@@ -1,31 +1,28 @@
-﻿using FromBossToCrook.Model;
+﻿using System;
 using FromBossToCrook.Tools.Calendar;
+using FromBossToCrook.Model;
 using FromBossToCrook.View;
-using System;
-using UnityEditor;
-using UnityEngine;
 
 namespace FromBossToCrook.Presenter
 {
-    public class JobShopPresenter : MonoBehaviour
+    public class JobShopPresenter
     {
-        public JobStats[] jobs;
-        public GameObject jobViewPrefab;
-        public Transform grid;
-
+        private IInventory<JobStats> _jobShopModel;
+        private IJobShopView<JobStats> _jobShopView;
+        
         public event Action<float> GetSalary;
 
         private JobStats _currentJob;
         private int monthInJob = 3;
 
-        void Start()
+        public JobShopPresenter(IInventory<JobStats> jobShopModel, IJobShopView<JobStats> jobShopView)
         {
+            _jobShopModel = jobShopModel;
+            _jobShopView = jobShopView;
+
+            _jobShopView.InitializeShopList(_jobShopModel.Items, AcceptJob);
+
             SimpleGameCalendar.Instance.MonthEnd += Instance_MonthEnd;
-            foreach (var job in jobs)
-            {
-                var j = GameObject.Instantiate(jobViewPrefab, grid);
-                j.GetComponent<JobView>().InitItem(job, AcceptJob);
-            }
         }
 
         private void Instance_MonthEnd()
@@ -43,6 +40,7 @@ namespace FromBossToCrook.Presenter
             {
                 monthInJob = 0;
                 _currentJob = stats;
+                _jobShopView.ShowCurrenctJob(_currentJob.Title);
             }
         }
     }

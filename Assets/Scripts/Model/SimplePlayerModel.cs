@@ -1,25 +1,75 @@
 ﻿using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace FromBossToCrook.Model
 {
-    public class SimplePlayerModel : IPlayerModel
+    [CreateAssetMenu]
+    public class SimplePlayerModel : ScriptableObject, IPlayerModel
     {
-        private int _maxAge;
-        public int MaxAge { get => _age; }
+        [SerializeField]
+        private int _maxAge = 83;
+        public int MaxAge { get => _maxAge; }
 
-        private int _age;
+        [SerializeField]
+        private int _age = 18;
         public int Age { get => _age; }
-        public float Money { get; set; }
-        public float Health { get; set; }
-        public float Happiness { get; set; }
+
+        [SerializeField]
+        private float _money = 0;
+        public float Money 
+        { 
+            get => _money; 
+            set
+            { 
+                _money = value;
+                ModelChanged?.Invoke();
+            } 
+        }
+
+        [SerializeField]
+        private float _health = 100;
+        public float Health 
+        { 
+            get => _health; 
+            set 
+            { 
+                if (value <= 0)
+                {
+                    _health = 0;
+                    Death?.Invoke();
+                }
+                else if (value >= 100)
+                    _health = 100;
+                else
+                    _health = value;
+
+                ModelChanged?.Invoke();
+            }
+        }
+
+        [SerializeField]
+        private float _happiness = 100;
+        public float Happiness 
+        { 
+            get => _happiness; 
+            set
+            {
+                if (value <= 0)
+                {
+                    _happiness = 0;
+                }
+                else if (value >= 100)
+                    _happiness = 100;
+                else
+                    _happiness = value;
+
+                ModelChanged?.Invoke();
+            }
+        }
 
         public event Action Death;
-
-        public SimplePlayerModel(int currentAge, int maxAge)
-        {
-            _maxAge = maxAge;
-            _age = currentAge;
-        }
+        public event Action ModelChanged;
 
         public void IncreaseAge()
         {
@@ -30,6 +80,8 @@ namespace FromBossToCrook.Model
             {
                 Death?.Invoke();
             }
+
+            ModelChanged?.Invoke();
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿namespace FromBossToCrook.View
+﻿using FromBossToCrook.Model;
+
+namespace FromBossToCrook.View
 {
     public interface IPlayerView
     {
-        void UpdateHealth(float value);
-        void UpdateHappiness(float value);
-        void UpdateMoney(float value);
-        void UpdateAge(int value);
+        void UpdateView(IPlayerModel model);
         void DeathView();
     }
 }

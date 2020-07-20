@@ -1,7 +1,7 @@
-﻿using FromBossToCrook.Tools.Generics;
+﻿using System;
 using UnityEngine;
-using System;
 using System.Collections;
+using FromBossToCrook.Tools.Generics;
 
 namespace FromBossToCrook.Tools.Calendar
 {

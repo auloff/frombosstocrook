@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FromBossToCrook.Model;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace FromBossToCrook.View
@@ -26,24 +27,13 @@ namespace FromBossToCrook.View
 
         }
 
-        public void UpdateAge(int value)
+        public void UpdateView(IPlayerModel model)
         {
-            _ageText.text = string.Concat("Age: ", value);
-        }
+            _moneyText.text = string.Concat("Money: ", model.Money);
+            _healthText.text = string.Concat("Health: ", model.Health);
+            _happinessText.text = string.Concat("Happiness: ", model.Happiness);
+            _ageText.text = string.Concat("Age: ", model.Age);
 
-        public void UpdateHappiness(float value)
-        {
-            _happinessText.text = string.Concat("Happiness: ", value);
-        }
-
-        public void UpdateHealth(float value)
-        {
-            _healthText.text = string.Concat("Health: ", value);
-        }
-
-        public void UpdateMoney(float value)
-        {
-            _moneyText.text = string.Concat("Money: ", value);
         }
     }
 }

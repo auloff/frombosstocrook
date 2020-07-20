@@ -17,9 +17,9 @@ namespace FromBossToCrook.View
         {
             _jobStats = stats;
             title.text = stats.Title;
-            salary.text = stats.Salary.ToString();
+            salary.text = string.Concat("Salary: ", stats.Salary.ToString());
 
-            button.onClick.AddListener(() => callback(_jobStats));
+            button.onClick.AddListener(() => callback?.Invoke(_jobStats));
         }
     }
 }
